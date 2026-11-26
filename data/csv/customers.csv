@@ -1,0 +1,9 @@
+customer_id,full_name,email_addr,phone_number,street_address,postal_code,card_last4_token,account_tier,order_count,created_at
+CUST-10041,Aarav Mehta,aarav.mehta@example.org,+91-98201-44310,"42 MG Road, Indiranagar",560038,4111-XXXX-XXXX-8821,GOLD,4,2026-03-14T09:12:00Z
+CUST-10042,Priya Nair,priya.nair@example.org,+91-98450-11298,"18 Boat Club Rd, Adyar",600028,5500-XXXX-XXXX-1094,SILVER,11,2026-04-02T14:25:00Z
+CUST-10043,Liam O'Connor,liam.oconnor@example.net,+1-415-555-0148,742 Evergreen Terrace,94107,4012-XXXX-XXXX-3310,GOLD,7,2026-05-19T11:04:00Z
+CUST-10044,Ananya Rao,ananya.rao@example.com,+91-99001-77654,9 Jubilee Hills Rd 14,500033,5200-XXXX-XXXX-4402,BASIC,2,2026-06-08T16:40:00Z
+CUST-10045,Mateo Silva,mateo.silva@example.org,+1-512-555-0193,310 Congress Ave Apt 4B,78701,4532-XXXX-XXXX-9915,SILVER,9,2026-06-21T08:55:00Z
+CUST-10046,Neha Verma,neha.verma@example.net,+91-98111-22309,27 Golf Links Block C,110003,4916-XXXX-XXXX-7741,GOLD,15,2026-07-11T19:30:00Z
+CUST-10047,Hannah Brooks,hannah.brooks@example.com,+44-7700-900412,"14 Baker St, Marylebone",10001,5412-XXXX-XXXX-6038,BASIC,1,2026-08-03T10:15:00Z
+CUST-10048,Kabir Joshi,kabir.joshi@example.org,+91-97654-33218,55 Koregaon Park Lane 7,411001,4111-XXXX-XXXX-5529,SILVER,6,2026-09-12T12:48:00Z

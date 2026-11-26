@@ -1,0 +1,272 @@
+[
+  {
+    "field_key": "CSV::customers.csv::customer_id",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "customer_id",
+    "declared_purpose": "Primary customer surrogate key",
+    "retention_schedule": "7 years post account closure",
+    "owner_team": "Commerce Core"
+  },
+  {
+    "field_key": "CSV::customers.csv::full_name",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "full_name",
+    "declared_purpose": "Customer account identity & order fulfillment",
+    "retention_schedule": "7 years post last order",
+    "owner_team": "Commerce Core"
+  },
+  {
+    "field_key": "CSV::customers.csv::email_addr",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "email_addr",
+    "declared_purpose": "Transactional receipts & security notices",
+    "retention_schedule": "",
+    "owner_team": "Growth & Messaging"
+  },
+  {
+    "field_key": "CSV::customers.csv::phone_number",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "phone_number",
+    "declared_purpose": "",
+    "retention_schedule": "3 years post last interaction",
+    "owner_team": "Customer Support"
+  },
+  {
+    "field_key": "CSV::customers.csv::street_address",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "street_address",
+    "declared_purpose": "Physical parcel delivery",
+    "retention_schedule": "5 years for tax & logistics audit",
+    "owner_team": "Fulfillment Ops"
+  },
+  {
+    "field_key": "CSV::customers.csv::postal_code",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "postal_code",
+    "declared_purpose": "Carrier zone routing & tax calculation",
+    "retention_schedule": "",
+    "owner_team": "Fulfillment Ops"
+  },
+  {
+    "field_key": "CSV::customers.csv::card_last4_token",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "card_last4_token",
+    "declared_purpose": "Payment reconciliation & chargeback lookup",
+    "retention_schedule": "7 years statutory ledger",
+    "owner_team": "Payments"
+  },
+  {
+    "field_key": "CSV::customers.csv::account_tier",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "account_tier",
+    "declared_purpose": "Loyalty tier entitlement",
+    "retention_schedule": "Account lifetime",
+    "owner_team": "Commerce Core"
+  },
+  {
+    "field_key": "CSV::employees.csv::employee_name",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "employee_name",
+    "declared_purpose": "HR employee directory & payroll",
+    "retention_schedule": "Employment + 5 years",
+    "owner_team": "People Ops"
+  },
+  {
+    "field_key": "CSV::employees.csv::national_tax_id",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "national_tax_id",
+    "declared_purpose": "Statutory income tax withholding",
+    "retention_schedule": "8 years statutory",
+    "owner_team": "Payroll"
+  },
+  {
+    "field_key": "CSV::employees.csv::bank_iban",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "bank_iban",
+    "declared_purpose": "",
+    "retention_schedule": "",
+    "owner_team": "Payroll"
+  },
+  {
+    "field_key": "CSV::employees.csv::annual_salary_usd",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "annual_salary_usd",
+    "declared_purpose": "Compensation administration",
+    "retention_schedule": "8 years statutory",
+    "owner_team": "People Ops"
+  },
+  {
+    "field_key": "CSV::employees.csv::home_city",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "home_city",
+    "declared_purpose": "Workforce regional office planning",
+    "retention_schedule": "",
+    "owner_team": "People Ops"
+  },
+  {
+    "field_key": "CSV::employees.csv::medical_accommodation",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "medical_accommodation",
+    "declared_purpose": "",
+    "retention_schedule": "",
+    "owner_team": "Workplace Safety"
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::reporter_handle",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "reporter_handle",
+    "declared_purpose": "Support ticket requester attribution",
+    "retention_schedule": "2 years post ticket closure",
+    "owner_team": "Customer Support"
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::gps_coordinates",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "gps_coordinates",
+    "declared_purpose": "Field dispatch & telemetry debugging",
+    "retention_schedule": "",
+    "owner_team": "Hardware Ops"
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::health_symptom_note",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "health_symptom_note",
+    "declared_purpose": "Product safety incident triage",
+    "retention_schedule": "",
+    "owner_team": "Product Safety"
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::billing_dispute_amt",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "billing_dispute_amt",
+    "declared_purpose": "",
+    "retention_schedule": "5 years audit",
+    "owner_team": "Billing Support"
+  },
+  {
+    "field_key": "SQL::users::username",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "username",
+    "declared_purpose": "User authentication & login display",
+    "retention_schedule": "Account lifetime + 90 days",
+    "owner_team": "Identity"
+  },
+  {
+    "field_key": "SQL::users::email",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "email",
+    "declared_purpose": "Account recovery & verification",
+    "retention_schedule": "Account lifetime + 90 days",
+    "owner_team": "Identity"
+  },
+  {
+    "field_key": "SQL::users::geo_city",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "geo_city",
+    "declared_purpose": "",
+    "retention_schedule": "1 year",
+    "owner_team": "Analytics"
+  },
+  {
+    "field_key": "SQL::users::religious_observance_pref",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "religious_observance_pref",
+    "declared_purpose": "",
+    "retention_schedule": "",
+    "owner_team": "Events"
+  },
+  {
+    "field_key": "SQL::kyc_records::passport_number",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "passport_number",
+    "declared_purpose": "Identity verification check",
+    "retention_schedule": "5 years post closure",
+    "owner_team": "Trust & Safety"
+  },
+  {
+    "field_key": "SQL::kyc_records::govt_ssn_or_aadhaar",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "govt_ssn_or_aadhaar",
+    "declared_purpose": "Regulatory KYC verification",
+    "retention_schedule": "",
+    "owner_team": "Trust & Safety"
+  },
+  {
+    "field_key": "SQL::kyc_records::residential_pin",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "residential_pin",
+    "declared_purpose": "Address postal verification",
+    "retention_schedule": "5 years post closure",
+    "owner_team": "Trust & Safety"
+  },
+  {
+    "field_key": "SQL::kyc_records::biometric_liveness_hash",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "biometric_liveness_hash",
+    "declared_purpose": "Anti-spoofing liveness verification",
+    "retention_schedule": "",
+    "owner_team": "Trust & Safety"
+  },
+  {
+    "field_key": "SQL::payroll_ledger::routing_ifsc_code",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "routing_ifsc_code",
+    "declared_purpose": "Salary bank clearing",
+    "retention_schedule": "8 years statutory",
+    "owner_team": "Payroll"
+  },
+  {
+    "field_key": "SQL::payroll_ledger::bank_account_no",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "bank_account_no",
+    "declared_purpose": "",
+    "retention_schedule": "8 years statutory",
+    "owner_team": "Payroll"
+  },
+  {
+    "field_key": "SQL::payroll_ledger::net_payout_inr",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "net_payout_inr",
+    "declared_purpose": "Payroll disbursement ledger",
+    "retention_schedule": "8 years statutory",
+    "owner_team": "Payroll"
+  },
+  {
+    "field_key": "SQL::payroll_ledger::tax_pan_ref",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "tax_pan_ref",
+    "declared_purpose": "",
+    "retention_schedule": "",
+    "owner_team": "Payroll"
+  }
+]

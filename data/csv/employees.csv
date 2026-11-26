@@ -1,0 +1,7 @@
+emp_code,employee_name,national_tax_id,bank_iban,annual_salary_usd,home_city,medical_accommodation,department,hire_date
+EMP-001,Rohan Kulkarni,ABCDE1234F,DE89370400440532013000,84500.00,Bengaluru,Ergonomic seating - lumbar support,Engineering,2024-06-01
+EMP-002,Clara Jensen,942-55-0192,GB29NWBK60161331926819,112000.00,Austin,None declared,Security,2023-11-15
+EMP-003,Vikram Desai,QWERT8812K,FR1420041010050500013M02606,96000.00,Pune,Insulin refrigeration access,Data Platform,2025-01-20
+EMP-004,Elena Rostova,318-44-7721,NL91ABNA0417164300,105400.00,Berlin,Visual contrast screen reader,Product,2022-09-05
+EMP-005,Siddharth Iyer,LMNOP4421R,ES9121000418450200051332,78900.00,Chennai,None declared,Operations,2025-04-10
+EMP-006,Maya Lin,601-29-8843,CH9300762011623852957,124000.00,Seattle,Migraine low-glare workspace,Architecture,2021-08-18

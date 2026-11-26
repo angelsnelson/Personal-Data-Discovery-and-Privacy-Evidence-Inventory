@@ -1,0 +1,386 @@
+[
+  {
+    "field_key": "CSV::customers.csv::customer_id",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "customer_id",
+    "true_class": "NONE",
+    "rationale": "Internal surrogate identifier, not direct human PII."
+  },
+  {
+    "field_key": "CSV::customers.csv::full_name",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "full_name",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Legal/display personal name."
+  },
+  {
+    "field_key": "CSV::customers.csv::email_addr",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "email_addr",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Personal email address."
+  },
+  {
+    "field_key": "CSV::customers.csv::phone_number",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "phone_number",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Personal telephone number."
+  },
+  {
+    "field_key": "CSV::customers.csv::street_address",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "street_address",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "Residential street address."
+  },
+  {
+    "field_key": "CSV::customers.csv::postal_code",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "postal_code",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "Postal delivery code."
+  },
+  {
+    "field_key": "CSV::customers.csv::card_last4_token",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "card_last4_token",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Masked payment card token."
+  },
+  {
+    "field_key": "CSV::customers.csv::account_tier",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "account_tier",
+    "true_class": "NONE",
+    "rationale": "Operational loyalty tier label (GOLD/SILVER/BASIC), not financial account data."
+  },
+  {
+    "field_key": "CSV::customers.csv::order_count",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "order_count",
+    "true_class": "NONE",
+    "rationale": "Aggregate integer order count."
+  },
+  {
+    "field_key": "CSV::customers.csv::created_at",
+    "source_type": "CSV",
+    "container": "customers.csv",
+    "column": "created_at",
+    "true_class": "NONE",
+    "rationale": "System creation timestamp."
+  },
+  {
+    "field_key": "CSV::employees.csv::emp_code",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "emp_code",
+    "true_class": "NONE",
+    "rationale": "Internal employee surrogate code."
+  },
+  {
+    "field_key": "CSV::employees.csv::employee_name",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "employee_name",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Employee full name."
+  },
+  {
+    "field_key": "CSV::employees.csv::national_tax_id",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "national_tax_id",
+    "true_class": "NATIONAL_ID",
+    "rationale": "National tax / SSN identifier."
+  },
+  {
+    "field_key": "CSV::employees.csv::bank_iban",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "bank_iban",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "International Bank Account Number."
+  },
+  {
+    "field_key": "CSV::employees.csv::annual_salary_usd",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "annual_salary_usd",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Individual compensation figure."
+  },
+  {
+    "field_key": "CSV::employees.csv::home_city",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "home_city",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "Employee city of residence."
+  },
+  {
+    "field_key": "CSV::employees.csv::medical_accommodation",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "medical_accommodation",
+    "true_class": "SENSITIVE_ATTRIBUTE",
+    "rationale": "Health/medical workplace accommodation details."
+  },
+  {
+    "field_key": "CSV::employees.csv::department",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "department",
+    "true_class": "NONE",
+    "rationale": "Organizational business unit."
+  },
+  {
+    "field_key": "CSV::employees.csv::hire_date",
+    "source_type": "CSV",
+    "container": "employees.csv",
+    "column": "hire_date",
+    "true_class": "NONE",
+    "rationale": "Employment start date."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::ticket_id",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "ticket_id",
+    "true_class": "NONE",
+    "rationale": "Support ticket reference ID."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::reporter_handle",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "reporter_handle",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "User handle identifying the ticket submitter."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::gps_coordinates",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "gps_coordinates",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "Precise latitude/longitude coordinates."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::health_symptom_note",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "health_symptom_note",
+    "true_class": "SENSITIVE_ATTRIBUTE",
+    "rationale": "Free-text health/symptom description."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::product_sku",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "product_sku",
+    "true_class": "NONE",
+    "rationale": "Hardware SKU identifier."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::severity_level",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "severity_level",
+    "true_class": "NONE",
+    "rationale": "Operational triage priority."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::billing_dispute_amt",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "billing_dispute_amt",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Customer monetary dispute amount."
+  },
+  {
+    "field_key": "CSV::support_tickets.csv::resolution_status",
+    "source_type": "CSV",
+    "container": "support_tickets.csv",
+    "column": "resolution_status",
+    "true_class": "NONE",
+    "rationale": "Workflow status."
+  },
+  {
+    "field_key": "SQL::users::user_id",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "user_id",
+    "true_class": "NONE",
+    "rationale": "Internal surrogate user key."
+  },
+  {
+    "field_key": "SQL::users::username",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "username",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Account username handle."
+  },
+  {
+    "field_key": "SQL::users::email",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "email",
+    "true_class": "DIRECT_IDENTIFIER",
+    "rationale": "Primary user email."
+  },
+  {
+    "field_key": "SQL::users::geo_city",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "geo_city",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "User geographic city."
+  },
+  {
+    "field_key": "SQL::users::religious_observance_pref",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "religious_observance_pref",
+    "true_class": "SENSITIVE_ATTRIBUTE",
+    "rationale": "Religious dietary/observance attribute."
+  },
+  {
+    "field_key": "SQL::users::signup_channel",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "signup_channel",
+    "true_class": "NONE",
+    "rationale": "Client platform channel (web/ios/android)."
+  },
+  {
+    "field_key": "SQL::users::is_active",
+    "source_type": "SQL",
+    "container": "users",
+    "column": "is_active",
+    "true_class": "NONE",
+    "rationale": "Boolean operational flag."
+  },
+  {
+    "field_key": "SQL::kyc_records::kyc_id",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "kyc_id",
+    "true_class": "NONE",
+    "rationale": "Internal KYC record ID."
+  },
+  {
+    "field_key": "SQL::kyc_records::user_id",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "user_id",
+    "true_class": "NONE",
+    "rationale": "Foreign key reference to users."
+  },
+  {
+    "field_key": "SQL::kyc_records::passport_number",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "passport_number",
+    "true_class": "NATIONAL_ID",
+    "rationale": "Government passport identifier."
+  },
+  {
+    "field_key": "SQL::kyc_records::govt_ssn_or_aadhaar",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "govt_ssn_or_aadhaar",
+    "true_class": "NATIONAL_ID",
+    "rationale": "National identity / SSN / Aadhaar number."
+  },
+  {
+    "field_key": "SQL::kyc_records::residential_pin",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "residential_pin",
+    "true_class": "CONTACT_LOCATION",
+    "rationale": "Postal PIN code of residence."
+  },
+  {
+    "field_key": "SQL::kyc_records::biometric_liveness_hash",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "biometric_liveness_hash",
+    "true_class": "SENSITIVE_ATTRIBUTE",
+    "rationale": "Biometric template/liveness hash."
+  },
+  {
+    "field_key": "SQL::kyc_records::verification_status",
+    "source_type": "SQL",
+    "container": "kyc_records",
+    "column": "verification_status",
+    "true_class": "NONE",
+    "rationale": "Operational KYC workflow status."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::ledger_id",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "ledger_id",
+    "true_class": "NONE",
+    "rationale": "Ledger primary key."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::emp_code",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "emp_code",
+    "true_class": "NONE",
+    "rationale": "Employee foreign key."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::routing_ifsc_code",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "routing_ifsc_code",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Bank routing / IFSC branch code."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::bank_account_no",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "bank_account_no",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Personal bank account number."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::net_payout_inr",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "net_payout_inr",
+    "true_class": "FINANCIAL_INFO",
+    "rationale": "Net salary payout amount."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::tax_pan_ref",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "tax_pan_ref",
+    "true_class": "NATIONAL_ID",
+    "rationale": "National Permanent Account Number (PAN) tax ID."
+  },
+  {
+    "field_key": "SQL::payroll_ledger::pay_period",
+    "source_type": "SQL",
+    "container": "payroll_ledger",
+    "column": "pay_period",
+    "true_class": "NONE",
+    "rationale": "Accounting month string."
+  }
+]

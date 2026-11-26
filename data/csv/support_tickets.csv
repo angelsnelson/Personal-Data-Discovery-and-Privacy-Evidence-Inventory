@@ -1,0 +1,7 @@
+ticket_id,reporter_handle,gps_coordinates,health_symptom_note,product_sku,severity_level,billing_dispute_amt,resolution_status
+TKT-88201,@mira_kapoor,"12.9716, 77.5946",Reported allergic skin reaction after wearable strap use,SKU-WRB-440,P2,$249.00,OPEN
+TKT-88202,@dev_singh99,"19.0760, 72.8777",Device battery overheated during sleep apnea tracking,SKU-SEN-210,P1,$180.50,ESCALATED
+TKT-88203,@sophia_chen,"30.2672, -97.7431",No health note; requested firmware reset,SKU-HUB-105,P3,$45.00,RESOLVED
+TKT-88204,@arjun_bose,"28.6139, 77.2090",Mild wrist rash noted with silicone band,SKU-WRB-440,P2,$125.00,OPEN
+TKT-88205,@nina_patel,"13.0827, 80.2707",Insulin pump Bluetooth sync timeout inquiry,SKU-MED-902,P1,$310.00,IN_PROGRESS
+TKT-88206,@lucas_meyer,"52.5200, 13.4050","Shipping box arrived dented, no injury",SKU-CHG-018,P4,$29.99,RESOLVED

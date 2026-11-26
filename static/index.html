@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PS-019 — Personal-Data Discovery &amp; Privacy Evidence Inventory</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link
+    href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Swiss Masthead -->
+    <header class="masthead">
+      <div class="masthead-top">
+        <div class="brand-block">
+          <div class="meta-strip">
+            <span class="tag tag-ink">PS-019 // MICROPROJECT</span>
+            <span class="tag">CSV + SQLITE SCANNER</span>
+            <span class="tag">5 DATA CLASSES</span>
+            <span class="tag tag-accent">HUMAN REVIEW ONLY</span>
+          </div>
+          <h1 class="display-title">Personal-Data Discovery &amp; Privacy Evidence Inventory</h1>
+        </div>
+
+        <div class="masthead-actions">
+          <div class="scan-timestamp">
+            <span class="label-xs">LAST SCAN</span>
+            <span id="last-scan-time" class="mono-readout tabular-nums">—</span>
+          </div>
+          <button id="btn-run-scan" class="btn btn-accent" type="button">
+            RUN SCAN
+          </button>
+          <button id="btn-reset-demo" class="btn btn-outline" type="button" title="Restore seeded CSVs, SQLite DB, rules, metadata, and ground truth">
+            RESET DEMO
+          </button>
+        </div>
+      </div>
+
+      <!-- Persistent Scope Boundary Banner -->
+      <div class="guardrail-banner" role="note" aria-label="Scope and Evidence Notice">
+        <span class="guardrail-flag">EVIDENCE NOTICE</span>
+        <p id="guardrail-text">
+          Outputs represent <strong>technical discovery evidence for human review</strong>. This tool does <strong>not</strong> make legal compliance rulings, determine lawful basis automatically, or infer universal data flows.
+        </p>
+      </div>
+
+      <!-- Primary 5-View Navigation -->
+      <nav class="primary-nav" aria-label="Primary Views">
+        <button class="nav-tab active" data-view="inventory" type="button">
+          <span class="nav-num">01</span>
+          <span class="nav-label">Evidence Inventory &amp; Scanner</span>
+        </button>
+        <button class="nav-tab" data-view="gaps" type="button">
+          <span class="nav-num">02</span>
+          <span class="nav-label">Metadata &amp; Gap Report</span>
+          <span id="nav-gap-badge" class="nav-badge tabular-nums">0</span>
+        </button>
+        <button class="nav-tab" data-view="evaluation" type="button">
+          <span class="nav-num">03</span>
+          <span class="nav-label">Precision &amp; Recall Lab</span>
+        </button>
+        <button class="nav-tab" data-view="sources" type="button">
+          <span class="nav-num">04</span>
+          <span class="nav-label">Data Sources, Rules &amp; Pseudocode</span>
+        </button>
+        <button class="nav-tab" data-view="scope" type="button">
+          <span class="nav-num">05</span>
+          <span class="nav-label">Scope &amp; Evidence Notice</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Live Status Toast -->
+    <div id="status-toast" class="status-toast hidden" role="status" aria-live="polite"></div>
+
+    <!-- Main Content Views -->
+    <main class="main-grid">
+      <!-- VIEW 1: EVIDENCE INVENTORY & SCANNER -->
+      <section id="view-inventory" class="view-panel active">
+        <div class="kpi-row" id="inventory-kpis"></div>
+
+        <div class="panel-box">
+          <div class="panel-header">
+            <div>
+              <span class="label-xs">CLASSIFICATION DISTRIBUTION</span>
+              <h2 class="section-title">5 Personal-Data Classes + Operational Non-PII</h2>
+            </div>
+            <div class="export-group">
+              <span class="label-xs">EXPORT INVENTORY:</span>
+              <a class="btn btn-sm btn-outline" href="/api/export/inventory?format=json">JSON</a>
+              <a class="btn btn-sm btn-outline" href="/api/export/inventory?format=csv">CSV</a>
+            </div>
+          </div>
+          <div class="class-filter-strip" id="class-filter-strip"></div>
+        </div>
+
+        <div class="panel-box">
+          <div class="toolbar">
+            <div class="toolbar-field grow">
+              <label class="label-xs" for="inv-search">SEARCH COLUMN / TABLE / PURPOSE</label>
+              <input id="inv-search" type="search" placeholder="e.g. email, payroll_ledger, passport, missing..." />
+            </div>
+            <div class="toolbar-field">
+              <label class="label-xs" for="inv-source-filter">SOURCE</label>
+              <select id="inv-source-filter">
+                <option value="ALL">ALL SOURCES</option>
+                <option value="CSV">CSV FILES</option>
+                <option value="SQL">SQLITE TABLES</option>
+              </select>
+            </div>
+            <div class="toolbar-field">
+              <label class="label-xs" for="inv-gap-filter">METADATA STATUS</label>
+              <select id="inv-gap-filter">
+                <option value="ALL">ALL STATUSES</option>
+                <option value="ANY_GAP">ANY EVIDENCE GAP</option>
+                <option value="MISSING_BOTH">MISSING BOTH</option>
+                <option value="MISSING_PURPOSE">MISSING PURPOSE</option>
+                <option value="MISSING_RETENTION">MISSING RETENTION</option>
+                <option value="COMPLETE">COMPLETE</option>
+                <option value="NOT_APPLICABLE">NON-PII (N/A)</option>
+              </select>
+            </div>
+            <div class="toolbar-field">
+              <label class="label-xs">&nbsp;</label>
+              <button id="btn-clear-filters" class="btn btn-outline btn-sm" type="button">CLEAR</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="swiss-table" id="inventory-table">
+              <thead>
+                <tr>
+                  <th>SOURCE</th>
+                  <th>CONTAINER / COLUMN</th>
+                  <th>CANDIDATE CLASS</th>
+                  <th>CONF.</th>
+                  <th>MASKED SAMPLE PREVIEW</th>
+                  <th>DECLARED PURPOSE</th>
+                  <th>RETENTION SCHEDULE</th>
+                  <th>GAP FLAG</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: METADATA & GAP REPORT -->
+      <section id="view-gaps" class="view-panel">
+        <div class="kpi-row" id="gaps-kpis"></div>
+
+        <div class="panel-box">
+          <div class="panel-header">
+            <div>
+              <span class="label-xs">PURPOSE &amp; RETENTION REGISTRY AUDIT</span>
+              <h2 class="section-title">Missing-Metadata &amp; Evidence Gap Report</h2>
+            </div>
+            <div class="export-group">
+              <span class="label-xs">EXPORT GAP REPORT:</span>
+              <a class="btn btn-sm btn-outline" href="/api/export/gaps?format=json">JSON</a>
+              <a class="btn btn-sm btn-outline" href="/api/export/gaps?format=csv">CSV</a>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="toolbar-field">
+              <label class="label-xs" for="gap-view-filter">SHOW RECORDS</label>
+              <select id="gap-view-filter">
+                <option value="ALL_GAPS">ALL EVIDENCE GAPS (CANDIDATE PII)</option>
+                <option value="MISSING_BOTH">MISSING BOTH PURPOSE &amp; RETENTION</option>
+                <option value="MISSING_PURPOSE">MISSING PURPOSE ONLY</option>
+                <option value="MISSING_RETENTION">MISSING RETENTION ONLY</option>
+                <option value="ALL_PII">ALL CANDIDATE PII (INCLUDING COMPLETE)</option>
+              </select>
+            </div>
+            <div class="toolbar-note">
+              Edit <strong>Declared Purpose</strong>, <strong>Retention Schedule</strong>, or <strong>Owner Team</strong> inline and click <strong>SAVE</strong> to resolve gaps live.
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="swiss-table" id="gaps-table">
+              <thead>
+                <tr>
+                  <th>FIELD</th>
+                  <th>CLASS</th>
+                  <th>GAP STATUS</th>
+                  <th>DECLARED BUSINESS PURPOSE</th>
+                  <th>RETENTION SCHEDULE</th>
+                  <th>OWNER TEAM</th>
+                  <th>UPDATE</th>
+                </tr>
+              </thead>
+              <tbody id="gaps-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: PRECISION & RECALL LAB -->
+      <section id="view-evaluation" class="view-panel">
+        <div class="kpi-row" id="eval-kpis"></div>
+
+        <div class="panel-box">
+          <div class="panel-header">
+            <div>
+              <span class="label-xs">GROUND-TRUTH BENCHMARKING</span>
+              <h2 class="section-title">Per-Class Precision, Recall &amp; F1 Score</h2>
+            </div>
+            <div class="export-group">
+              <span class="label-xs">EXPORT EVALUATION:</span>
+              <a class="btn btn-sm btn-outline" href="/api/export/evaluation?format=json">JSON</a>
+              <a class="btn btn-sm btn-outline" href="/api/export/evaluation?format=csv">CSV</a>
+              <button id="btn-jump-rules" class="btn btn-sm btn-accent" type="button">TUNE RULES &rarr;</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="swiss-table" id="eval-class-table">
+              <thead>
+                <tr>
+                  <th>DATA CLASS</th>
+                  <th>TP</th>
+                  <th>FP</th>
+                  <th>FN</th>
+                  <th>SUPPORT</th>
+                  <th>PRECISION</th>
+                  <th>RECALL</th>
+                  <th>F1 SCORE</th>
+                </tr>
+              </thead>
+              <tbody id="eval-class-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel-box">
+          <div class="panel-header">
+            <div>
+              <span class="label-xs">FIELD-LEVEL GROUND TRUTH VS. PREDICTION</span>
+              <h2 class="section-title">Disagreement Inspector &amp; Ground-Truth Label Editor</h2>
+            </div>
+            <div class="toolbar-field">
+              <select id="eval-verdict-filter" aria-label="Filter evaluation verdicts">
+                <option value="ALL">ALL LABELLED FIELDS</option>
+                <option value="DISAGREEMENTS">DISAGREEMENTS ONLY (FP / FN / MISCLASSIFIED)</option>
+                <option value="FALSE_POSITIVE">FALSE POSITIVES</option>
+                <option value="FALSE_NEGATIVE">FALSE NEGATIVES</option>
+                <option value="MISCLASSIFIED">MISCLASSIFIED CLASS</option>
+                <option value="MATCH">EXACT MATCHES</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="swiss-table" id="eval-fields-table">
+              <thead>
+                <tr>
+                  <th>SOURCE / FIELD</th>
+                  <th>PREDICTED CLASS</th>
+                  <th>CONF.</th>
+                  <th>VERDICT</th>
+                  <th>GROUND-TRUTH LABEL (EDITABLE)</th>
+                  <th>RATIONALE</th>
+                </tr>
+              </thead>
+              <tbody id="eval-fields-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: DATA SOURCES, RULES & PSEUDOCODE -->
+      <section id="view-sources" class="view-panel">
+        <div class="subtab-bar">
+          <button class="subtab active" data-subtab="sub-sources" type="button">A. CSV &amp; SQLITE DATA SOURCES</button>
+          <button class="subtab" data-subtab="sub-rules" type="button">B. CONFIGURABLE RULES ENGINE</button>
+          <button class="subtab" data-subtab="sub-pseudocode" type="button">C. ARCHITECTURE &amp; PSEUDOCODE</button>
+        </div>
+
+        <!-- Subtab A: Data Sources -->
+        <div id="sub-sources" class="subtab-panel active">
+          <div class="split-actions-grid">
+            <div class="panel-box">
+              <span class="label-xs">SYNTHETIC DATA GENERATOR</span>
+              <h3 class="sub-title">Generate Fresh Synthetic CSV</h3>
+              <p class="body-muted">Creates a new synthetic CSV containing all 5 PII classes + operational columns and scans it immediately.</p>
+              <form id="form-generate-csv" class="inline-form">
+                <input id="gen-csv-name" type="text" placeholder="optional_name.csv" />
+                <input id="gen-csv-rows" type="number" min="3" max="50" value="8" title="Row count" />
+                <button class="btn btn-accent btn-sm" type="submit">GENERATE &amp; SCAN</button>
+              </form>
+            </div>
+
+            <div class="panel-box">
+              <span class="label-xs">CUSTOM DATASET INGESTION</span>
+              <h3 class="sub-title">Upload Custom .CSV File</h3>
+              <p class="body-muted">Upload any UTF-8 CSV file with headers to scan against your active detection rules.</p>
+              <form id="form-upload-csv" class="inline-form">
+                <input id="upload-csv-file" type="file" accept=".csv" required />
+                <button class="btn btn-ink btn-sm" type="submit">UPLOAD &amp; SCAN</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="sources-grid" id="sources-grid"></div>
+        </div>
+
+        <!-- Subtab B: Rules Engine -->
+        <div id="sub-rules" class="subtab-panel">
+          <div class="panel-box">
+            <div class="panel-header">
+              <div>
+                <span class="label-xs">HEURISTIC MULTI-SIGNAL RULESET</span>
+                <h2 class="section-title">Configurable Detection Rules</h2>
+                <p class="body-muted">
+                  Tip for live Precision/Recall demo: try removing broad <code>account</code> from Financial Info (fixes False Positive on <code>account_tier</code>) or adding <code>|pin</code> to Contact &amp; Location (fixes False Negative on <code>residential_pin</code>).
+                </p>
+              </div>
+              <div class="export-group">
+                <button id="btn-add-rule" class="btn btn-outline btn-sm" type="button">+ ADD RULE</button>
+                <button id="btn-reset-rules" class="btn btn-outline btn-sm" type="button">RESET DEFAULTS</button>
+                <button id="btn-save-rules" class="btn btn-accent btn-sm" type="button">SAVE &amp; RE-SCAN</button>
+              </div>
+            </div>
+
+            <div id="rules-editor-list" class="rules-list"></div>
+          </div>
+        </div>
+
+        <!-- Subtab C: Pseudocode & Architecture -->
+        <div id="sub-pseudocode" class="subtab-panel">
+          <div class="panel-box">
+            <div class="panel-header">
+              <div>
+                <span class="label-xs">MICROPROJECT DEMO WALKTHROUGH</span>
+                <h2 class="section-title">Scanner Pipeline Architecture &amp; Pseudocode</h2>
+              </div>
+            </div>
+
+            <div class="arch-pipeline">
+              <div class="arch-step">
+                <span class="tag tag-ink">01 // INGEST</span>
+                <h4>CSV + SQLite Extraction</h4>
+                <p>Reads UTF-8 CSV headers/rows and queries SQLite <code>sqlite_master</code> + <code>PRAGMA table_info</code>.</p>
+              </div>
+              <div class="arch-step">
+                <span class="tag tag-ink">02 // CLASSIFY</span>
+                <h4>Multi-Signal Rule Scoring</h4>
+                <p>Evaluates column regex + sample-value match ratio across 5 classes with configurable weights.</p>
+              </div>
+              <div class="arch-step">
+                <span class="tag tag-ink">03 // JOIN</span>
+                <h4>Metadata &amp; Gap Audit</h4>
+                <p>Joins candidate PII fields to declared purpose &amp; retention schedules; flags missing entries.</p>
+              </div>
+              <div class="arch-step">
+                <span class="tag tag-accent">04 // EVALUATE</span>
+                <h4>Precision / Recall + Review</h4>
+                <p>Compares predictions vs. ground truth and exports human-review evidence without legal rulings.</p>
+              </div>
+            </div>
+
+            <pre class="pseudocode-block"><code>ALGORITHM PS019_Discover_And_Audit_Privacy_Evidence:
+  INPUT:
+    csv_files      &larr; read_all("data/csv/*.csv")
+    sql_tables     &larr; query_sqlite("data/privacy_demo.db", PRAGMA table_info + SELECT *)
+    rules          &larr; load_enabled_rules("data/rules.json")
+    meta_registry  &larr; load_metadata("data/metadata_registry.json")
+    ground_truth   &larr; load_ground_truth("data/ground_truth.json")
+
+  STEP 1: SCAN_AND_CLASSIFY(sources, rules)
+    FOR EACH (source_type, container, column, values) IN (csv_files + sql_tables):
+      scores &larr; {}
+      FOR EACH rule IN rules WHERE rule.enabled == TRUE:
+        col_hit   &larr; regex_match(rule.column_pattern, column)
+        val_ratio &larr; count(v IN non_null(values) WHERE regex_match(rule.value_pattern, v)) / len(non_null(values))
+        score     &larr; (rule.column_weight IF col_hit ELSE 0) + (rule.value_weight * val_ratio IF val_ratio >= rule.min_value_match_ratio ELSE 0)
+        IF score > 0:
+          scores[rule.data_class] &larr; combine_confidence(scores[rule.data_class], min(score, 1.0))
+
+      predicted_class &larr; argmax(scores) IF max(scores) >= 0.45 ELSE "NONE"
+      masked_preview  &larr; mask_samples(values[:3], predicted_class)
+
+  STEP 2: LINK_PURPOSE_AND_FLAG_EVIDENCE_GAPS(evidence, meta_registry)
+    FOR EACH record IN evidence:
+      meta &larr; meta_registry.get(record.field_key)
+      IF record.predicted_class == "NONE" AND empty(meta.purpose) AND empty(meta.retention):
+        record.gap_status &larr; "NOT_APPLICABLE"
+      ELSE IF present(meta.purpose) AND present(meta.retention):
+        record.gap_status &larr; "COMPLETE"
+      ELSE:
+        record.gap_status &larr; MISSING_PURPOSE | MISSING_RETENTION | MISSING_BOTH   # Flagged for human review
+
+  STEP 3: EVALUATE_AGAINST_GROUND_TRUTH(evidence, ground_truth)
+    FOR EACH class C IN [DIRECT_IDENTIFIER, NATIONAL_ID, FINANCIAL_INFO, CONTACT_LOCATION, SENSITIVE_ATTRIBUTE, NONE]:
+      TP &larr; count(pred == C AND true == C)
+      FP &larr; count(pred == C AND true != C)
+      FN &larr; count(pred != C AND true == C)
+      Precision[C] &larr; TP / (TP + FP);   Recall[C] &larr; TP / (TP + FN);   F1[C] &larr; 2*P*R / (P + R)
+
+  OUTPUT:
+    Evidence Inventory + Gap Report + Precision/Recall Metrics
+    TAGGED: "Technical discovery evidence for human review; NOT a legal compliance decision."</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: SCOPE & EVIDENCE NOTICE -->
+      <section id="view-scope" class="view-panel">
+        <div class="panel-box">
+          <div class="panel-header">
+            <div>
+              <span class="label-xs">GOVERNANCE &amp; SYSTEM BOUNDARIES</span>
+              <h2 class="section-title">Scope &amp; Evidence Notice</h2>
+            </div>
+            <span class="tag tag-accent">NON-LEGAL-ADVICE GUARDRAIL</span>
+          </div>
+
+          <p class="scope-lead">
+            <strong>PS-019: Personal-Data Discovery and Privacy Evidence Inventory</strong> is an engineering discovery and metadata-auditing aid. Its outputs serve solely as <strong>technical discovery evidence for qualified human review</strong> (privacy engineers, data stewards, security analysts, and legal/DPO counsel).
+          </p>
+
+          <div class="scope-matrix">
+            <div class="scope-col scope-does">
+              <span class="label-xs">SUPPORTED TECHNICAL CAPABILITIES</span>
+              <h3>What This Tool Does</h3>
+              <ul id="scope-does-list"></ul>
+            </div>
+            <div class="scope-col scope-does-not">
+              <span class="label-xs">STRICT ARCHITECTURAL BOUNDARIES</span>
+              <h3>What This Tool Explicitly Does NOT Do</h3>
+              <ul id="scope-does-not-list"></ul>
+            </div>
+          </div>
+
+          <div class="human-review-box">
+            <span class="label-xs">RECOMMENDED HUMAN REVIEW WORKFLOW</span>
+            <ol>
+              <li><strong>Verify Candidate Classifications:</strong> Inspect matched rules and masked sample previews; heuristic regexes can yield false positives (e.g., internal tier codes) or false negatives (e.g., opaque column names).</li>
+              <li><strong>Resolve Evidence Gaps with Data Owners:</strong> Confirm actual processing purposes and statutory/business retention schedules in the Metadata Registry.</li>
+              <li><strong>Escalate Legal Decisions Separately:</strong> Use exported CSV/JSON evidence packs as input to formal DPIA, RoPA, or legal counsel review rather than treating scanner output as a compliance certification.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Slide-Over Field Inspector Drawer -->
+    <aside id="inspector-drawer" class="drawer hidden" aria-label="Field Evidence Inspector">
+      <div class="drawer-header">
+        <div>
+          <span class="label-xs">FIELD EVIDENCE INSPECTOR</span>
+          <h3 id="drawer-title" class="drawer-title">—</h3>
+        </div>
+        <button id="btn-close-drawer" class="btn btn-outline btn-sm" type="button">CLOSE &times;</button>
+      </div>
+      <div id="drawer-body" class="drawer-body"></div>
+    </aside>
+  </div>
+
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>
